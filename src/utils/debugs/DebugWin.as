@@ -48,6 +48,9 @@ package utils.debugs
 		protected function resetInput():void{
 			txt_input.text="";
 		}
+		protected function format(tf:TextFormat):void{
+			txt_output.defaultTextFormat=tf;
+		}
 		protected function initSize():void
 		{
 			txt_output.width=this.stage.stageWidth-10;
