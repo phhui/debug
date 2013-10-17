@@ -4,7 +4,7 @@ package utils.debugs
 
 	public class Debug
 	{
-		static private var win:DebugControl=new DebugControl();
+		static private var db:DebugControl=new DebugControl();
 		static private var show:Boolean=false;
 		static private var strList:Array=[];
 		public function Debug()
@@ -13,21 +13,21 @@ package utils.debugs
 		}
 		static public function debug(msg:String):void{
 			strList.push(msg);
-			if(show)win.showMsg(msg);
+			if(show)db.showMsg(msg);
 		}
 		static public function showDebug(s:Stage,_contact:Function=null):void{
 			if(show){
 				hideDebug();
 				return;
 			}
-			s.addChild(win);
 			show=true;
-			win.msglist=strList;
-			if(_contact!=null)win.contact=_contact;
+			db.show(s);
+			db.msglist=strList;
+			if(_contact!=null)db.contact=_contact;
 		}
 		static public function hideDebug():void{
 			show=false;
-			if(win.parent)win.parent.removeChild(win);
+			db.hide();
 		}
 	}
 }

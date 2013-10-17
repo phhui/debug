@@ -12,12 +12,14 @@ package utils.debugs
 	{
 		private var txt_output:TextField;
 		private var txt_input:TextField;
+		private var bg:Sprite;
 		private var scr:scroll
 		public function DebugWin()
 		{
 			var tf:TextFormat= new TextFormat("微软雅黑",12,0x000000);
 			txt_output=new TextField();
 			txt_input=new TextField();
+			bg=new Sprite();
 			scr=new scroll();
 			txt_output.multiline=true;
 			txt_output.wordWrap=true;
@@ -26,39 +28,49 @@ package utils.debugs
 			txt_input.defaultTextFormat=tf;
 			txt_input.border=true;
 			txt_input.type=TextFieldType.INPUT;
+			bg.graphics.beginFill(0x999999,0.5);
+			bg.graphics.drawRect(0,0,100,100);
+			this.addChild(bg);
 			this.addChild(txt_output);
 			this.addChild(txt_input);
 			this.addChild(scr);
 			createScroll();
 		}
-		protected function addText(str:String):void{
-			txt_output.htmlText+=str+"\r\n";
+		public function addText(str:String):void{
+			if(!this.stage)return;
+			txt_output.htmlText+=str+"\n";
 			scr.bindObj(txt_output,null,this.stage.stageHeight-30);
 			scr.setPos(txt_output.maxScrollV);
 		}
-		protected function get inputText():String{
+		public function get inputText():String{
 			return txt_input.text;
 		}
-		protected function get input():TextField{
+		public function get input():TextField{
 			return txt_input;
 		}
-		protected function resetOutput():void{
+		public function resetOutput():void{
 			txt_output.text="";
 		}
-		protected function resetInput():void{
+		public function resetInput():void{
 			txt_input.text="";
 		}
-		protected function format(tf:TextFormat):void{
+		public function format(tf:TextFormat):void{
 			txt_output.defaultTextFormat=tf;
 		}
-		protected function initSize():void
-		{
+		public function setBg(color:Object,alp:Number):void{
+			bg.graphics.clear();
+			bg.graphics.beginFill(uint(color),alp);
+			bg.graphics.drawRect(0,0,this.stage.stageWidth,this.stage.stageHeight);
+		}
+		public function initSize():void{
 			txt_output.width=this.stage.stageWidth-10;
 			txt_output.height=this.stage.stageHeight-30;
 			txt_input.width=this.stage.stageWidth;
 			txt_input.height=25;
 			txt_input.y=this.stage.stageHeight-25;
 			scr.x=this.stage.stageWidth-10;
+			bg.width=this.stage.stageWidth;
+			bg.height=this.stage.stageHeight;
 		}
 		private function createScroll():void{
 			var up:Sprite=new Sprite();
